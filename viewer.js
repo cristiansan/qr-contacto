@@ -30,6 +30,7 @@ async function loadData() {
         whatsapp:     project.contact.whatsapp     || '',
         instructions: project.contact.instructions || '',
         extraFields:  project.contact.extraFields  || [],
+        qrUrl:        project.shortUrl || project.url || window.location.href,
       };
     }
   } catch { /* fall through */ }
@@ -111,9 +112,9 @@ function render(data) {
       </div>`).join('');
   }
 
-  // QR of current page URL (now just a short project-ID URL)
+  // QR — use the same shortened URL stored in the project
   new QRCode(document.getElementById('viewer-qr'), {
-    text: window.location.href,
+    text: data.qrUrl || window.location.href,
     width: 88, height: 88,
     colorDark: '#000000', colorLight: '#ffffff',
     correctLevel: QRCode.CorrectLevel.L,

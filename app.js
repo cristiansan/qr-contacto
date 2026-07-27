@@ -389,7 +389,7 @@ document.getElementById('btn-mode-full').addEventListener('click', () => {
 // Step 3 actions
 // ============================================================
 document.getElementById('btn-copy-link').addEventListener('click', () => {
-  const value = currentQrValue();
+  const value = currentFullUrl;
   navigator.clipboard.writeText(value).then(() => {
     const btn = document.getElementById('btn-copy-link');
     btn.textContent = t('s3.copied');

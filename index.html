@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Contacto</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- PASO 1: Nombre del proyecto -->
+  <div id="step-1" class="step">
+    <header class="app-header">
+      <div class="logo">📋</div>
+      <h1>QR Contacto</h1>
+      <p class="tagline" data-i18n="tagline"></p>
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="es">ES</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="pt">PT</button>
+      </div>
+    </header>
+
+    <div class="card">
+      <h2 data-i18n="s1.title"></h2>
+      <p class="hint" data-i18n="s1.hint"></p>
+
+      <div class="field">
+        <label for="project-name" data-i18n="s1.label"></label>
+        <input type="text" id="project-name" data-i18n-ph="s1.ph" autocomplete="off" maxlength="50">
+      </div>
+
+      <div id="name-error" class="alert alert-error" style="display:none"></div>
+
+      <button id="btn-continue" class="btn btn-primary btn-full" data-i18n="s1.btn"></button>
+    </div>
+
+    <div id="existing-projects-section" class="card" style="display:none">
+      <h3 data-i18n="s1.saved"></h3>
+      <div id="existing-projects-list"></div>
+    </div>
+  </div>
+
+  <!-- PASO 2: Formulario -->
+  <div id="step-2" class="step" style="display:none">
+    <div class="step-nav">
+      <button id="btn-back" class="btn-back">←</button>
+      <span class="project-badge" id="project-badge"></span>
+    </div>
+
+    <div class="card">
+      <h2 data-i18n="s2.title"></h2>
+      <p class="hint" data-i18n="s2.hint"></p>
+
+      <div class="field">
+        <label for="f-name">
+          <span data-i18n="s2.name"></span> <span class="req">*</span>
+        </label>
+        <input type="text" id="f-name" data-i18n-ph="s2.name.ph">
+      </div>
+
+      <div class="field">
+        <label for="f-email" data-i18n="s2.email"></label>
+        <input type="email" id="f-email" data-i18n-ph="s2.email.ph">
+      </div>
+
+      <div class="field">
+        <label for="f-whatsapp" data-i18n="s2.wa"></label>
+        <div class="input-group">
+          <span class="input-addon">+</span>
+          <input type="tel" id="f-whatsapp" data-i18n-ph="s2.wa.ph">
+        </div>
+      </div>
+
+      <div class="field">
+        <label data-i18n="s2.instr"></label>
+        <div class="editor-box">
+          <div class="toolbar" id="editor-toolbar">
+            <button class="tool-btn" data-cmd="bold" title="Bold"><b>B</b></button>
+            <button class="tool-btn" data-cmd="italic" title="Italic"><i>I</i></button>
+            <button class="tool-btn" data-cmd="underline" title="Underline"><u>U</u></button>
+            <span class="tool-sep"></span>
+            <button class="tool-btn" data-cmd="fontSize" data-val="5" title="Bigger">A+</button>
+            <button class="tool-btn" data-cmd="fontSize" data-val="2" title="Smaller">A−</button>
+            <span class="tool-sep"></span>
+            <button class="tool-btn" data-cmd="insertUnorderedList" data-i18n="toolbar.bullet"></button>
+            <button class="tool-btn" data-cmd="insertOrderedList" data-i18n="toolbar.numbered"></button>
+          </div>
+          <div
+            class="editor"
+            id="f-instructions"
+            contenteditable="true"
+            data-i18n-dp="s2.instr.ph"></div>
+          <div class="editor-footer">
+            <span id="char-counter" class="char-counter">0</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="extra-fields"></div>
+
+      <div class="add-field-ui">
+        <button id="btn-add-field" class="btn btn-ghost btn-add">
+          <span class="plus-icon">+</span>
+          <span data-i18n="s2.addField"></span>
+        </button>
+        <div id="add-field-form" class="add-field-form" style="display:none">
+          <input type="text" id="new-field-label" data-i18n-ph="s2.addField.ph" maxlength="40">
+          <div class="add-field-actions">
+            <button id="btn-confirm-add" class="btn btn-primary btn-sm" data-i18n="s2.addField.ok"></button>
+            <button id="btn-cancel-add" class="btn btn-ghost btn-sm" data-i18n="s2.addField.cancel"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button id="btn-generate" class="btn btn-primary btn-full" data-i18n="s2.save"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASO 3: QR generado -->
+  <div id="step-3" class="step" style="display:none">
+    <div class="card qr-card">
+      <div class="success-badge" data-i18n="s3.saved"></div>
+      <h2 data-i18n="s3.title"></h2>
+
+      <div id="qr-mode-toggle" class="qr-mode-toggle" style="display:none">
+        <button class="qr-mode-btn" id="btn-mode-mini" data-mode="mini">
+          <span data-i18n="mode.mini"></span>
+          <span class="mode-tag">21×21</span>
+        </button>
+        <button class="qr-mode-btn" id="btn-mode-full" data-mode="full">
+          <span data-i18n="mode.full"></span>
+          <span class="mode-tag">25×25</span>
+        </button>
+      </div>
+      <p id="qr-mode-desc" class="qr-mode-desc"></p>
+
+      <div class="print-area" id="print-area">
+        <div class="qr-wrapper">
+          <p class="qr-project-label" id="qr-label"></p>
+          <div id="qr-loading" class="qr-loading" style="display:none">
+            <div class="spinner-sm"></div>
+            <p data-i18n="s3.loading"></p>
+          </div>
+          <div id="qr-code"></div>
+          <p class="qr-scan-hint" data-i18n="s3.scan"></p>
+        </div>
+      </div>
+
+      <div class="qr-actions">
+        <button onclick="window.print()" class="btn btn-primary" data-i18n="s3.print"></button>
+        <button id="btn-copy-link" class="btn btn-secondary" data-i18n="s3.copy"></button>
+      </div>
+
+      <div class="qr-url-display">
+        <label data-i18n="s3.urlLabel"></label>
+        <div class="url-box" id="qr-url-box"></div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="step3-actions">
+        <button id="btn-create-another" class="btn btn-ghost" data-i18n="s3.another"></button>
+        <button id="btn-view-all" class="btn btn-ghost" data-i18n="s3.viewAll"></button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

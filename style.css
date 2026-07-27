@@ -1,0 +1,914 @@
+/* ============================================================
+   Variables — Dark Theme
+   ============================================================ */
+:root {
+  --primary:        #818cf8;
+  --primary-dark:   #6366f1;
+  --primary-light:  #1e1b4b;
+  --primary-text:   #c7d2fe;
+  --success:        #4ade80;
+  --success-light:  #052e16;
+  --success-text:   #86efac;
+  --error:          #f87171;
+  --error-light:    #2d1515;
+  --error-text:     #fca5a5;
+  --wa-green:       #25d366;
+  --wa-dark:        #128c7e;
+  --text:           #f1f5f9;
+  --text-2:         #94a3b8;
+  --text-3:         #64748b;
+  --border:         #334155;
+  --bg:             #0d1117;
+  --card:           #161b22;
+  --input-bg:       #0d1117;
+  --toolbar-bg:     #0d1117;
+  --shadow:         0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-lg:      0 20px 60px rgba(0, 0, 0, 0.7);
+  --radius:         14px;
+  --radius-sm:      8px;
+}
+
+/* ============================================================
+   Reset
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   Creator App Layout
+   ============================================================ */
+.app {
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 20px 16px 60px;
+}
+
+/* ============================================================
+   Header
+   ============================================================ */
+.app-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 0 28px;
+  position: relative;
+}
+
+.logo { font-size: 44px; margin-bottom: 8px; }
+
+.app-header h1 {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: -0.5px;
+}
+
+.tagline {
+  color: var(--text-2);
+  font-size: 15px;
+  margin-top: 6px;
+  text-align: center;
+}
+
+/* ============================================================
+   Language Switcher
+   ============================================================ */
+.lang-switcher {
+  display: flex;
+  gap: 2px;
+  margin-top: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  color: var(--text-3);
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s;
+}
+
+.lang-btn:hover { color: var(--text); }
+
+.lang-btn.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Viewer lang switcher (smaller, inline in footer) */
+.lang-switcher-sm {
+  display: inline-flex;
+  gap: 2px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  padding: 2px;
+  margin-top: 8px;
+}
+
+.lang-switcher-sm .lang-btn {
+  padding: 3px 9px;
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.lang-switcher-sm .lang-btn.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* ============================================================
+   Cards
+   ============================================================ */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.hint {
+  color: var(--text-2);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* ============================================================
+   Form Fields
+   ============================================================ */
+.field { margin-bottom: 16px; }
+
+.field label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-2);
+  margin-bottom: 6px;
+}
+
+.req { color: var(--error); }
+
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="tel"] {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  color: var(--text);
+  background: var(--input-bg);
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.field input::placeholder { color: var(--text-3); }
+
+.field input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* WhatsApp input group */
+.input-group {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  background: var(--input-bg);
+}
+
+.input-group:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.input-addon {
+  padding: 10px 10px 10px 14px;
+  color: var(--text-3);
+  font-size: 15px;
+  font-weight: 600;
+  background: var(--toolbar-bg);
+  border-right: 1px solid var(--border);
+  user-select: none;
+}
+
+.input-group input {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  flex: 1;
+  padding-left: 10px !important;
+  background: var(--input-bg);
+}
+
+/* ============================================================
+   Rich Text Editor
+   ============================================================ */
+.editor-box {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.editor-box:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 8px;
+  background: var(--toolbar-bg);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.tool-btn {
+  background: none;
+  border: none;
+  padding: 5px 9px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-2);
+  transition: background 0.1s, color 0.1s;
+  line-height: 1;
+  font-family: inherit;
+}
+
+.tool-btn:hover {
+  background: var(--primary-light);
+  color: var(--primary-text);
+}
+
+.tool-btn.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+.tool-sep {
+  width: 1px;
+  height: 18px;
+  background: var(--border);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+.editor {
+  min-height: 130px;
+  padding: 12px 14px;
+  font-size: 15px;
+  color: var(--text);
+  background: var(--input-bg);
+  outline: none;
+  line-height: 1.65;
+}
+
+.editor:empty::before {
+  content: attr(data-placeholder);
+  color: var(--text-3);
+  pointer-events: none;
+}
+
+.editor ul, .editor ol { padding-left: 20px; }
+
+.editor-footer {
+  padding: 4px 12px 6px;
+  background: var(--toolbar-bg);
+  border-top: 1px solid var(--border);
+  text-align: right;
+}
+
+.char-counter { font-size: 11px; color: var(--text-3); }
+.char-counter.warn { color: var(--error); font-weight: 600; }
+
+/* ============================================================
+   Add Extra Field
+   ============================================================ */
+.add-field-ui { margin-bottom: 20px; }
+
+.btn-add {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  padding: 8px 14px;
+}
+
+.plus-icon { font-size: 20px; font-weight: 300; line-height: 1; }
+
+.add-field-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  background: var(--toolbar-bg);
+  border-radius: var(--radius-sm);
+  border: 1.5px dashed var(--border);
+}
+
+.add-field-form input {
+  padding: 9px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+  background: var(--input-bg);
+  color: var(--text);
+  transition: border-color 0.15s;
+}
+
+.add-field-form input::placeholder { color: var(--text-3); }
+.add-field-form input:focus { border-color: var(--primary); }
+
+.add-field-actions { display: flex; gap: 8px; }
+
+.extra-field label { display: flex; align-items: center; gap: 4px; }
+
+.btn-remove-field {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-3);
+  font-size: 18px;
+  padding: 0 2px;
+  line-height: 1;
+  margin-left: auto;
+  transition: color 0.1s;
+}
+.btn-remove-field:hover { color: var(--error); }
+
+/* ============================================================
+   Step Navigation
+   ============================================================ */
+.step-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.btn-back {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 7px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--text-2);
+  font-family: inherit;
+  transition: border-color 0.15s, color 0.15s;
+}
+.btn-back:hover { border-color: var(--primary); color: var(--primary); }
+
+.project-badge {
+  background: var(--primary-light);
+  color: var(--primary-text);
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+  font-family: inherit;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--card);
+  color: var(--text);
+  border: 1.5px solid var(--border);
+}
+.btn-secondary:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btn-ghost {
+  background: none;
+  color: var(--text-2);
+  border: 1.5px solid transparent;
+}
+.btn-ghost:hover {
+  background: var(--card);
+  color: var(--primary);
+  border-color: var(--border);
+}
+
+.btn-danger {
+  background: var(--error-light);
+  color: var(--error-text);
+  border: none;
+  padding: 5px 10px;
+  font-size: 13px;
+}
+.btn-danger:hover {
+  background: var(--error);
+  color: #fff;
+}
+
+.btn-sm    { padding: 5px 12px; font-size: 13px; }
+.btn-full  { width: 100%; }
+
+.btn-whatsapp {
+  background: var(--wa-green);
+  color: #fff;
+  font-size: 16px;
+  padding: 13px 24px;
+  border-radius: 12px;
+}
+.btn-whatsapp:hover {
+  background: var(--wa-dark);
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   Alerts
+   ============================================================ */
+.alert {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  margin-top: 12px;
+}
+
+.alert-error {
+  background: var(--error-light);
+  color: var(--error-text);
+  border: 1px solid #7f1d1d;
+}
+
+/* ============================================================
+   Form actions & dividers
+   ============================================================ */
+.form-actions {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 20px 0;
+}
+
+/* ============================================================
+   QR Mode Toggle
+   ============================================================ */
+.qr-mode-toggle {
+  display: flex;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0 auto 12px;
+  width: fit-content;
+  background: var(--toolbar-bg);
+}
+
+.qr-mode-btn {
+  background: none;
+  border: none;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-2);
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.qr-mode-btn + .qr-mode-btn { border-left: 1.5px solid var(--border); }
+
+.qr-mode-btn.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+.mode-tag { font-size: 11px; opacity: 0.7; font-weight: 400; }
+
+.qr-mode-desc {
+  font-size: 13px;
+  margin-bottom: 12px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.desc-mini { background: var(--success-light); color: var(--success-text); }
+.desc-full { background: var(--primary-light); color: var(--primary-text); }
+
+/* ============================================================
+   Step 3: QR Card
+   ============================================================ */
+.qr-card { text-align: center; }
+
+.success-badge {
+  display: inline-block;
+  background: var(--success-light);
+  color: var(--success-text);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.print-area {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.qr-wrapper {
+  background: #fff;              /* QR always on white for scannability */
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  display: inline-block;
+  text-align: center;
+}
+
+.qr-project-label {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;               /* dark text on white QR card */
+  margin-bottom: 12px;
+  letter-spacing: -0.3px;
+}
+
+.qr-scan-hint {
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* QR loading */
+.qr-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 24px 0;
+  color: var(--text-2);
+  font-size: 14px;
+  background: #fff;
+}
+
+.spinner-sm {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+#qr-code { display: inline-block; }
+#qr-code img, #qr-code canvas { display: block; }
+
+.qr-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.qr-url-display { text-align: left; margin-bottom: 16px; }
+
+.qr-url-display label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.url-box {
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 11px;
+  color: var(--text-2);
+  word-break: break-all;
+  font-family: monospace;
+}
+
+.step3-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   Existing Projects List
+   ============================================================ */
+.project-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 8px;
+}
+.project-item:last-child { border-bottom: none; }
+
+.project-item-info { flex: 1; min-width: 0; }
+
+.project-item-info strong {
+  display: block;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text);
+}
+
+.project-date { font-size: 12px; color: var(--text-3); }
+
+.project-item-actions {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   Viewer
+   ============================================================ */
+.viewer-body {
+  background: #0d1117;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 16px 48px;
+}
+
+.viewer-container { width: 100%; max-width: 480px; }
+
+.viewer-loading {
+  text-align: center;
+  color: var(--text-2);
+  padding: 80px 0;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.contact-card {
+  background: var(--card);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+}
+
+.contact-header {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  padding: 32px 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.contact-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  border: 2px solid rgba(255,255,255,0.35);
+}
+
+.contact-identity h1 {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.contact-project {
+  color: rgba(255,255,255,0.7);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.contact-body { padding: 4px 0; }
+
+.contact-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+.contact-row:hover { background: rgba(255,255,255,0.03); }
+
+.contact-icon {
+  font-size: 20px;
+  width: 28px;
+  text-align: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.contact-info { flex: 1; min-width: 0; }
+
+.contact-label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 2px;
+}
+
+.contact-value {
+  font-size: 16px;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+a.contact-value { color: var(--primary); }
+a.contact-value:hover { text-decoration: underline; }
+
+.contact-section {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 10px;
+}
+
+.instructions-content {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text);
+}
+.instructions-content ul,
+.instructions-content ol { padding-left: 20px; }
+
+.whatsapp-cta {
+  padding: 20px 24px;
+  text-align: center;
+}
+
+.contact-footer {
+  padding: 14px 24px;
+  text-align: center;
+  background: var(--toolbar-bg);
+  border-top: 1px solid var(--border);
+}
+
+.contact-footer p {
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.contact-footer a { color: var(--primary); text-decoration: none; }
+
+/* Error card */
+.error-card {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 56px 24px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+}
+
+.error-icon { font-size: 52px; margin-bottom: 16px; }
+.error-card h2 { margin-bottom: 8px; }
+.error-card p { color: var(--text-2); font-size: 15px; }
+
+/* ============================================================
+   Print Styles
+   ============================================================ */
+@media print {
+  body * { visibility: hidden !important; }
+
+  .print-area, .print-area * { visibility: visible !important; }
+
+  .print-area {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+  }
+
+  .qr-wrapper { border: 2px solid #000 !important; box-shadow: none !important; }
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 400px) {
+  .card { padding: 20px 14px; }
+  .contact-header { padding: 24px 16px; }
+  .contact-row { padding: 12px 16px; }
+  .contact-section { padding: 14px 16px; }
+  .qr-actions { flex-direction: column; align-items: center; }
+  .app-header h1 { font-size: 24px; }
+}

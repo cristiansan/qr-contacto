@@ -14,17 +14,23 @@ function getProjects() {
 function saveProject(project) {
   const projects = getProjects();
   const idx = projects.findIndex(p => p.id === project.id);
-  if (idx >= 0) {
-    projects[idx] = project;
-  } else {
-    projects.push(project);
-  }
+  if (idx >= 0) projects[idx] = project;
+  else projects.push(project);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+
+  // Sync to Firestore (best-effort, doesn't block UI)
+  const doSave = () => window.fbSave(project).catch(e => console.warn('fbSave:', e));
+  if (window.firebaseReady) doSave();
+  else document.addEventListener('firebase-ready', doSave, { once: true });
 }
 
 function removeProject(id) {
   const projects = getProjects().filter(p => p.id !== id);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+
+  if (window.firebaseReady) {
+    window.fbDelete(id).catch(e => console.warn('fbDelete:', e));
+  }
 }
 
 function projectNameExists(name) {
@@ -326,7 +332,7 @@ async function generateQr() {
   }
   currentFullUrl = shortUrl;
 
-  // Guardar proyecto
+  // Guardar proyecto (contact se guarda separado para Firestore/admin)
   const project = {
     id: `${currentName}-${Date.now()}`,
     name: currentName,
@@ -334,6 +340,13 @@ async function generateQr() {
     shortUrl: shortUrl !== longUrl ? shortUrl : null,
     miniText: currentMiniText || null,
     createdAt: data.createdAt,
+    contact: {
+      name:        data.name,
+      email:       data.email,
+      whatsapp:    data.whatsapp,
+      instructions: data.instructions,
+      extraFields: data.extraFields,
+    },
   };
   saveProject(project);
 
@@ -470,6 +483,29 @@ function hideError(el) {
 }
 
 // ============================================================
+// Firestore sync — load all projects from cloud on startup
+// ============================================================
+function syncFromFirebase() {
+  function doSync() {
+    window.fbLoad()
+      .then(fbProjects => {
+        if (!fbProjects || fbProjects.length === 0) return;
+        // Firestore is source of truth: merge into localStorage
+        const local   = getProjects();
+        const localMap = Object.fromEntries(local.map(p => [p.id, p]));
+        fbProjects.forEach(p => { localMap[p.id] = p; });
+        const merged = Object.values(localMap);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+        renderExistingProjects();
+      })
+      .catch(e => console.warn('fbLoad:', e));
+  }
+
+  if (window.firebaseReady) doSync();
+  else document.addEventListener('firebase-ready', doSync, { once: true });
+}
+
+// ============================================================
 // Init
 // ============================================================
 initLangSwitcher();
@@ -488,5 +524,6 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
   btn.onclick = () => window.setLang(btn.dataset.lang);
 });
 
+syncFromFirebase();
 renderExistingProjects();
 showStep(1);

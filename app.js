@@ -590,7 +590,7 @@ async function generateQr() {
   document.getElementById('qr-loading').style.display = 'none';
   document.getElementById('qr-url-box').textContent   = shortUrl;
 
-  currentQrMode  = currentMiniText ? 'mini' : 'full';
+  currentQrMode  = 'full';
   applyQrMode();
   renderExistingProjects();
   updateCreateButton();

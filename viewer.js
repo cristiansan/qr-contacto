@@ -84,6 +84,14 @@ function render(data) {
     row.style.display = 'block';
   }
 
+  // QR code of current URL shown in header
+  new QRCode(document.getElementById('viewer-qr'), {
+    text: window.location.href,
+    width: 88, height: 88,
+    colorDark: '#000000', colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.L,
+  });
+
   // Extra fields
   if (data.extraFields && data.extraFields.length > 0) {
     const container = document.getElementById('extra-fields-view');

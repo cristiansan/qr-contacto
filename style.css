@@ -785,6 +785,18 @@ h3 {
   margin-top: 4px;
 }
 
+.contact-identity { flex: 1; min-width: 0; }
+
+.viewer-qr-wrap {
+  background: #fff;
+  border-radius: 8px;
+  padding: 5px;
+  flex-shrink: 0;
+  align-self: center;
+}
+.viewer-qr-wrap img,
+.viewer-qr-wrap canvas { display: block; }
+
 .contact-body { padding: 4px 0; }
 
 .contact-row {

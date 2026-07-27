@@ -30,7 +30,7 @@ async function loadData() {
         whatsapp:     project.contact.whatsapp     || '',
         instructions: project.contact.instructions || '',
         extraFields:  project.contact.extraFields  || [],
-        qrUrl:        project.miniText || project.shortUrl || project.url || window.location.href,
+        qrUrl:        project.shortUrl || project.url || window.location.href,
       };
     }
   } catch { /* fall through */ }

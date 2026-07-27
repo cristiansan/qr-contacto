@@ -45,6 +45,11 @@ const ADMIN_EMAIL = 'cristiansan@gmail.com';
       return snap.exists() ? Object.values(snap.val()) : [];
     };
 
+    window.fbLoadProject = async (id) => {
+      const snap = await get(ref(db, `projects/${id}`));
+      return snap.exists() ? snap.val() : null;
+    };
+
     window.fbDelete = async (id) =>
       remove(ref(db, `projects/${id}`));
 

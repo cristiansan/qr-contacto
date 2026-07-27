@@ -35,16 +35,16 @@ function projectNameExists(name, excludeId = null) {
 }
 
 // ============================================================
-// URL encoding
+// URL helpers
 // ============================================================
-function encodeData(data) {
-  return LZString.compressToEncodedURIComponent(JSON.stringify(data));
+function makeProjectId(name) {
+  const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  return `${slug}-${Date.now()}`;
 }
 
-function buildViewerUrl(data) {
-  const encoded  = encodeData(data);
+function buildViewerUrl(projectId) {
   const pathBase = window.location.pathname.replace(/\/[^/]*$/, '');
-  return `${window.location.origin}${pathBase}/view.html#${encoded}`;
+  return `${window.location.origin}${pathBase}/view.html#${encodeURIComponent(projectId)}`;
 }
 
 // ============================================================
@@ -544,22 +544,14 @@ async function generateQr() {
     if (label && value) extraFields.push({ label, value });
   });
 
-  const whatsapp = document.getElementById('f-whatsapp').value.trim();
-  const user     = window.currentUser;
+  const whatsapp  = document.getElementById('f-whatsapp').value.trim();
+  const email     = document.getElementById('f-email').value.trim();
+  const user      = window.currentUser;
+  const projectId = editingProject?.id || makeProjectId(currentName);
 
-  const data = {
-    projectName:  currentName,
-    name,
-    email:        document.getElementById('f-email').value.trim(),
-    whatsapp,
-    instructions: editor.innerHTML,
-    extraFields,
-    createdAt:    editingProject?.createdAt || new Date().toISOString(),
-  };
-
-  const longUrl       = buildViewerUrl(data);
-  const phoneDigits   = whatsapp.replace(/\D/g, '');
-  currentMiniText     = phoneDigits ? `+${phoneDigits}` : '';
+  const longUrl     = buildViewerUrl(projectId);
+  const phoneDigits = whatsapp.replace(/\D/g, '');
+  currentMiniText   = phoneDigits ? `+${phoneDigits}` : '';
 
   // Show step 3 with spinner
   document.getElementById('qr-label').textContent           = currentName;
@@ -576,18 +568,17 @@ async function generateQr() {
   currentFullUrl = shortUrl;
 
   // Build project object
-  const projectId = editingProject?.id || `${currentName}-${Date.now()}`;
   const project = {
     id:        projectId,
     name:      currentName,
     url:       longUrl,
     shortUrl:  shortUrl !== longUrl ? shortUrl : null,
     miniText:  currentMiniText || null,
-    createdAt: data.createdAt,
+    createdAt: editingProject?.createdAt || new Date().toISOString(),
     userId:    user?.uid   || null,
     userEmail: user?.email || null,
     contact: {
-      name, email: data.email, whatsapp, instructions: data.instructions, extraFields,
+      name, email, whatsapp, instructions: editor.innerHTML, extraFields,
     },
   };
 
@@ -682,7 +673,7 @@ function showQrForProject(id) {
   if (!project) return;
 
   currentName     = project.name;
-  currentFullUrl  = project.shortUrl || project.url;
+  currentFullUrl  = project.contact ? buildViewerUrl(project.id) : (project.shortUrl || project.url);
   currentMiniText = project.miniText || '';
   currentQrMode   = currentMiniText ? 'mini' : 'full';
 
